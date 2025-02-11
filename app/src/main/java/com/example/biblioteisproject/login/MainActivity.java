@@ -1,8 +1,7 @@
-package com.example.biblioteisproject;
+package com.example.biblioteisproject.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,19 +11,19 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.biblioteisproject.API.models.Book;
 import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.API.repository.BookRepository;
 import com.example.biblioteisproject.API.repository.UserRepository;
+import com.example.biblioteisproject.menu.MenuWindow;
+import com.example.biblioteisproject.R;
 
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    private EditText etUsername, etPassword;
+    private EditText etEmail, etPassword;
     private TextView tvErrorMessage;
     private Button btnLogin;
-    private User userLogin;
     private boolean loginSuccess = false;
     MainActivityVM vm;
     @Override
@@ -41,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(view -> {
             if (validarCredenciales()) {
                 Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-
-            } else {
-                tvErrorMessage.setVisibility(View.VISIBLE);
             }
         });
 
@@ -76,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private boolean validarCredenciales() {
-        String username = etUsername.getText().toString();
+        String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
 
         UserRepository userRepository = new UserRepository();
@@ -84,13 +80,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<User> result) {
                 for (User user : result) {
-                    if (user.getName().equals(username) && user.getPasswordHash().equals(password)) {
+                    if (user.getEmail().equals(email) && user.getPasswordHash().equals(password)) {
                         loginSuccess = true;
                         vm.user.postValue(user);
-
                         break;
                     }
                 }
+                if (!loginSuccess) {
+                    tvErrorMessage.setVisibility(View.VISIBLE);
+                }
+
             }
             @Override
             public void onFailure(Throwable t) {
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        etUsername = findViewById(R.id.etUsername);
+        etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         tvErrorMessage = findViewById(R.id.tvErrorMessage);
         btnLogin = findViewById(R.id.btnLogin);
