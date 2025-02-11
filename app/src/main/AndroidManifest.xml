@@ -16,6 +16,9 @@
         android:theme="@style/Theme.BiblioTeisProject"
         tools:targetApi="31">
         <activity
+            android:name=".books.AvailableBooks"
+            android:exported="false" />
+        <activity
             android:name=".menu.MenuWindow"
             android:exported="false" />
         <activity
