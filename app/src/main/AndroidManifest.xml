@@ -16,6 +16,9 @@
         android:theme="@style/Theme.BiblioTeisProject"
         tools:targetApi="31">
         <activity
+            android:name=".details.BookDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".AvailableBooks.AvailableBooks"
             android:exported="false" />
         <activity
@@ -33,9 +36,7 @@
         <activity
             android:name=".BookDetail.BookDetail"
             android:exported="false" />
-        <activity
-            android:name=".AvailableBooks.AvailableBooks"
-            android:exported="false" />
+
     </application>
 
 </manifest>
