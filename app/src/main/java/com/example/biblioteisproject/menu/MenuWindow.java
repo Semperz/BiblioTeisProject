@@ -1,5 +1,6 @@
 package com.example.biblioteisproject.menu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,37 +11,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.biblioteisproject.API.models.User;
+import com.example.biblioteisproject.BookDetail.BookDetail;
+import com.example.biblioteisproject.BookList.BookList;
 import com.example.biblioteisproject.R;
 
 public class MenuWindow extends AppCompatActivity {
 
     RecyclerView recommendedBooks;
     RecyclerView newBooks;
-    Button buttonL, button2;
+    Button buttonL, buttonP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_window);
 
+        User user = (User) getIntent().getSerializableExtra("user");
+
         // Inicializa los botones
         buttonL = findViewById(R.id.buttonLibros);
-        button2 = findViewById(R.id.buttonPerfil);
+        buttonP = findViewById(R.id.buttonPerfil);
 
-        // Configura los listeners de los botones
-        buttonL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MenuWindow.this, "Botón 1 presionado", Toast.LENGTH_SHORT).show();
-            }
+
+        buttonL.setOnClickListener(view -> {
+            Intent intent = new Intent(this, BookList.class);
+            intent.putExtra("user", user);
+            startActivity(intent);
         });
 
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MenuWindow.this, "Botón 2 presionado", Toast.LENGTH_SHORT).show();
-            }
+        buttonP.setOnClickListener(view -> {
+            Toast.makeText(MenuWindow.this, "Botón 2 presionado", Toast.LENGTH_SHORT).show();
+
         });
+
 
         // Configura los RecyclerViews
         recommendedBooks = findViewById(R.id.recommendedBooks);
@@ -73,12 +77,25 @@ public class MenuWindow extends AppCompatActivity {
 
         class BookViewHolder extends RecyclerView.ViewHolder {
 
+            Button btnDetalles;
+
             public BookViewHolder(View itemView) {
                 super(itemView);
+                btnDetalles = itemView.findViewById(R.id.btnDetalles);
             }
 
             public void bind() {
                 // Lógica para vincular datos al ViewHolder (por ejemplo, imagenes o texto)
+            }
+
+            private View.OnClickListener listener(int position){
+                return new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MenuWindow.this, BookDetail.class);
+                        intent.putExtra("book", position);
+                    }
+                };
             }
         }
     }
