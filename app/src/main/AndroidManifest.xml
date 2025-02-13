@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BookDetail.BookDetail"
+            android:name=".details.BookDetailActivity"
             android:exported="false" />
     </application>
 

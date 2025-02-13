@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.biblioteisproject.R;
-import com.example.biblioteisproject.books.BooksListAdapter;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class AvailableBooks extends AppCompatActivity {

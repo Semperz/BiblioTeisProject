@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.AvailableBooks.AvailableBooks;
-import com.example.biblioteisproject.BookDetail.BookDetail;
 import com.example.biblioteisproject.R;
+import com.example.biblioteisproject.details.BookDetailActivity;
 
 public class MenuWindow extends AppCompatActivity {
 
@@ -92,7 +92,7 @@ public class MenuWindow extends AppCompatActivity {
                 return new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MenuWindow.this, BookDetail.class);
+                        Intent intent = new Intent(MenuWindow.this, BookDetailActivity.class);
                         intent.putExtra("book", position);
                     }
                 };
