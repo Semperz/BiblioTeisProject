@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.biblioteisproject.R;
@@ -20,6 +22,7 @@ public class AvailableBooks extends AppCompatActivity {
     TextInputEditText etBuscarTitulo, etBuscarAutor;
     Button btnBuscar, btnVolver;
     RecyclerView rvLibros;
+    private AvailableBooksMV availableBooksMV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,13 @@ public class AvailableBooks extends AppCompatActivity {
         initializeViews();
 
 
+        availableBooksMV = new ViewModelProvider(this).get(AvailableBooksMV.class);
+
+        availableBooksMV.books.observe(this, books -> {
+            rvLibros.setAdapter(new BooksListAdapter(books));
+        });
+
+        rvLibros.setLayoutManager(new LinearLayoutManager(this));
     }
 
 

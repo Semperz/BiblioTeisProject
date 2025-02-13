@@ -57,7 +57,7 @@ public class MenuWindow extends AppCompatActivity {
 
         @Override
         public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(R.layout.fragment_book, parent, false);
+            View view = getLayoutInflater().inflate(R.layout.fragment_available_books, parent, false);
             return new BookViewHolder(view);
         }
 
