@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +16,7 @@ public class MenuWindow extends AppCompatActivity {
 
     RecyclerView recommendedBooks;
     RecyclerView newBooks;
-    Button button1, button2;
+    Button buttonL, button2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +24,11 @@ public class MenuWindow extends AppCompatActivity {
         setContentView(R.layout.activity_menu_window);
 
         // Inicializa los botones
-        button1 = findViewById(R.id.button1);
-        button2 = findViewById(R.id.button2);
+        buttonL = findViewById(R.id.buttonLibros);
+        button2 = findViewById(R.id.buttonPerfil);
 
         // Configura los listeners de los botones
-        button1.setOnClickListener(new View.OnClickListener() {
+        buttonL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MenuWindow.this, "Botón 1 presionado", Toast.LENGTH_SHORT).show();

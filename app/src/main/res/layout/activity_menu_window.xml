@@ -9,11 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-
-        <!-- TextViews y RecyclerView... (el resto de tu layout sigue igual) -->
+        android:layout_height="match_parent">>
 
         <TextView
             android:id="@+id/titleText"
@@ -30,11 +26,12 @@
             android:id="@+id/recommendedText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:text="Libros Recomendados"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button1" />
+            app:layout_constraintTop_toBottomOf="@+id/titleText" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recommendedBooks"
@@ -50,7 +47,8 @@
             android:id="@+id/newAdditionsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:text="Nuevas Adiciones"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,23 +65,27 @@
             app:layout_constraintTop_toBottomOf="@id/newAdditionsText" />
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/buttonLibros"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
-            android:layout_marginEnd="28dp"
-            android:text="Btn 1"
-            android:textSize="10sp"
-            app:layout_constraintEnd_toStartOf="@+id/button2"
-            app:layout_constraintTop_toTopOf="@+id/titleText" />
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="16dp"
+            android:text="Libros"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/newBooks" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/buttonPerfil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Btn 2"
-            android:textSize="10sp"
-            tools:layout_editor_absoluteX="323dp"
-            tools:layout_editor_absoluteY="51dp" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Perfil"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/buttonLibros"
+            app:layout_constraintTop_toBottomOf="@+id/newBooks" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
