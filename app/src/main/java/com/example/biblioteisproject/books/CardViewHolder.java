@@ -12,7 +12,7 @@ import com.example.biblioteisproject.R;
 class CardViewHolder extends RecyclerView.ViewHolder {
     ImageView imagen;
     TextView tvTitulo, tvAutor, tvFechaPubli;
-    Button btnAlquilar;
+    Button btnDetalles;
 
 
     public CardViewHolder(View view) {
@@ -21,16 +21,16 @@ class CardViewHolder extends RecyclerView.ViewHolder {
         tvTitulo = view.findViewById(R.id.tvTitulo);
         tvAutor = view.findViewById(R.id.tvAutor);
         tvFechaPubli = view.findViewById(R.id.tvFechaPubli);
-        btnAlquilar = view.findViewById(R.id.btnAlquilar);
+        btnDetalles = view.findViewById(R.id.btnDetalles);
 
     }
 
-    public Button getBtnAlquilar() {
-        return btnAlquilar;
+    public Button getBtnDetalles() {
+        return btnDetalles;
     }
 
-    public void setBtnAlquilar(Button btnAlquilar) {
-        this.btnAlquilar = btnAlquilar;
+    public void setBtnDetalles(Button btnDetalles) {
+        this.btnDetalles = btnDetalles;
     }
 
     public ImageView getImagen() {
