@@ -30,6 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".BookDetail.BookDetail"
+            android:exported="false" />
+        <activity
+            android:name=".BookList.BookList"
+            android:exported="false" />
     </application>
 
 </manifest>
