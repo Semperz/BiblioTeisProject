@@ -11,20 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- LinearLayout para los botones en orientación horizontal -->
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp">
 
-            <!-- Botón 1 -->
-
-            <!-- Botón 2 -->
-        </LinearLayout>
 
         <!-- TextViews y RecyclerView... (el resto de tu layout sigue igual) -->
 

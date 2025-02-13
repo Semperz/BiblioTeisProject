@@ -26,8 +26,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintMarginEnd="12dp"
-            tools:src="@drawable/imagenNoDisponible"/>
+            android:layout_marginEnd="12dp"
+            tools:src="@drawable/imagen_no_disponible"/>
 
         <!-- Título del libro -->
         <TextView
