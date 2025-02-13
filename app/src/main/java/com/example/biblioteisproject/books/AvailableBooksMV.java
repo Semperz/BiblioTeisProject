@@ -49,4 +49,26 @@ public class AvailableBooksMV extends ViewModel {
             }
         });
     }
+
+    public void getFilteredBooks(String title, String author){
+        BookRepository bookRepository = new BookRepository();
+        bookRepository.getBooks(new BookRepository.ApiCallback<List<Book>>() {
+            @Override
+            public void onSuccess(List<Book> result) {
+                List<Book> filteredBooks = new ArrayList<>();
+                for (Book book : result){
+                    boolean matchesTitle = title.isEmpty() || book.getTitle().toLowerCase().contains(title.toLowerCase());
+                    boolean matchesAuthor = author.isEmpty() || book.getAuthor().toLowerCase().contains(author.toLowerCase());
+                    if (matchesTitle && matchesAuthor){
+                        filteredBooks.add(book);
+                    }
+                }
+                books.setValue(filteredBooks);
+            }
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(null, "Error al buscar libros", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }

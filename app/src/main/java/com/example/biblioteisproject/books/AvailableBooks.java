@@ -38,6 +38,12 @@ public class AvailableBooks extends AppCompatActivity {
         });
 
         rvLibros.setLayoutManager(new LinearLayoutManager(this));
+
+        btnBuscar.setOnClickListener((view) -> {
+            String titulo = etBuscarTitulo.getText().toString();
+            String autor = etBuscarAutor.getText().toString();
+            availableBooksMV.getFilteredBooks(titulo, autor);
+        });
     }
 
 
