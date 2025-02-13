@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.biblioteisproject.API.models.User;
+import com.example.biblioteisproject.AvailableBooks.AvailableBooks;
 import com.example.biblioteisproject.BookDetail.BookDetail;
-import com.example.biblioteisproject.BookList.BookList;
 import com.example.biblioteisproject.R;
 
 public class MenuWindow extends AppCompatActivity {
@@ -35,7 +35,7 @@ public class MenuWindow extends AppCompatActivity {
 
 
         buttonL.setOnClickListener(view -> {
-            Intent intent = new Intent(this, BookList.class);
+            Intent intent = new Intent(this, AvailableBooks.class);
             intent.putExtra("user", user);
             startActivity(intent);
         });

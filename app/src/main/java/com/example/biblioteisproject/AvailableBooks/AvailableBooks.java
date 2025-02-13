@@ -1,4 +1,4 @@
-package com.example.biblioteisproject.books;
+package com.example.biblioteisproject.AvailableBooks;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.biblioteisproject.R;
+import com.example.biblioteisproject.books.BooksListAdapter;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class AvailableBooks extends AppCompatActivity {
