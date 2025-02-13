@@ -33,9 +33,6 @@
         <activity
             android:name=".BookDetail.BookDetail"
             android:exported="false" />
-        <activity
-            android:name=".AvailableBooks.AvailableBooks"
-            android:exported="false" />
     </application>
 
 </manifest>
