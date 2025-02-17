@@ -52,8 +52,6 @@ public class MenuWindow extends AppCompatActivity {
             Intent intent = new Intent(this, ProfileActivity.class);
             intent.putExtra("user", user);
             startActivity(intent);
-
-
         });
 
 

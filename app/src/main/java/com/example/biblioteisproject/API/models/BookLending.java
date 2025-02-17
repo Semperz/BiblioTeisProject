@@ -1,6 +1,8 @@
 package com.example.biblioteisproject.API.models;
 
-public class BookLending {
+import java.io.Serializable;
+
+public class BookLending implements Serializable {
 
     private int bookId;
     private int userId;
