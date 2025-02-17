@@ -1,5 +1,6 @@
 package com.example.biblioteisproject.AvailableBooks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.biblioteisproject.R;
+import com.example.biblioteisproject.menu.MenuWindow;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class AvailableBooks extends AppCompatActivity {
@@ -40,6 +42,11 @@ public class AvailableBooks extends AppCompatActivity {
             String titulo = etBuscarTitulo.getText().toString();
             String autor = etBuscarAutor.getText().toString();
             availableBooksMV.getFilteredBooks(titulo, autor);
+        });
+
+        btnVolver.setOnClickListener((view) -> {
+            Intent intent = new Intent(this, MenuWindow.class);
+            startActivity(intent);
         });
     }
 
