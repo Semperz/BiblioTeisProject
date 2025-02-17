@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.biblioteisproject.API.models.User;
+import com.example.biblioteisproject.API.repository.UserProvider;
 import com.example.biblioteisproject.AvailableBooks.BooksListAdapter;
 import com.example.biblioteisproject.R;
 
@@ -36,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
         rvBooks = findViewById(R.id.rvBooks);
 
         // Recuperar el objeto User desde el Intent
-        currentUser = (User) getIntent().getSerializableExtra("user");
+        currentUser = UserProvider.getInstance();
 
         // Inicializar el ViewModel
         profileWindowMv = new ViewModelProvider(this).get(ProfileActivityMV.class);
