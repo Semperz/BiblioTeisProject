@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.biblioteisproject.API.models.Book;
+import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.R;
 import com.example.biblioteisproject.details.BookDetailActivity;
 

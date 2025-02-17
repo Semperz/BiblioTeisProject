@@ -98,10 +98,10 @@
             android:id="@+id/btnPrestar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:backgroundTint="@color/teal_700"
             android:text="Prestar"
-            android:textColor="@android:color/white"
-            android:layout_marginEnd="16dp" />
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/btnDevolver"
@@ -121,6 +121,6 @@
         tools:layout_editor_absoluteY="16dp"
         android:textColor="@android:color/white"
         android:backgroundTint="@color/teal_700"
-        />
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

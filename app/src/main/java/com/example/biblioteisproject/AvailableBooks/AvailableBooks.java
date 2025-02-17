@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.R;
 import com.example.biblioteisproject.menu.MenuWindow;
 import com.google.android.material.textfield.TextInputEditText;
@@ -49,11 +50,6 @@ public class AvailableBooks extends AppCompatActivity {
             startActivity(intent);
         });
     }
-
-
-
-
-
 
 
 
