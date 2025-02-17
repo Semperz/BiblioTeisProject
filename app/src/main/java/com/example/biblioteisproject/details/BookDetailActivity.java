@@ -25,10 +25,8 @@ public class BookDetailActivity extends AppCompatActivity {
         inicializer();
         putData();
 
-
         btnVolver.setOnClickListener(view -> {
-            Intent intent = new Intent(this, AvailableBooks.class);
-            startActivity(intent);
+            finish();
         });
     }
 
