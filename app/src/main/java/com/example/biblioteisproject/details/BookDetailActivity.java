@@ -1,5 +1,6 @@
 package com.example.biblioteisproject.details;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.biblioteisproject.API.models.Book;
+import com.example.biblioteisproject.AvailableBooks.AvailableBooks;
 import com.example.biblioteisproject.R;
 
 public class BookDetailActivity extends AppCompatActivity {
@@ -22,6 +24,12 @@ public class BookDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_book_detail);
         inicializer();
         putData();
+
+
+        btnVolver.setOnClickListener(view -> {
+            Intent intent = new Intent(this, AvailableBooks.class);
+            startActivity(intent);
+        });
     }
 
     protected void inicializer() {
@@ -33,6 +41,7 @@ public class BookDetailActivity extends AppCompatActivity {
         tvISBN = findViewById(R.id.tvISBN);
         btnPrestar = findViewById(R.id.btnPrestar);
         btnDevolver = findViewById(R.id.btnDevolver);
+        btnVolver = findViewById(R.id.btnVolver);
     }
 
     protected void putData() {
@@ -44,4 +53,6 @@ public class BookDetailActivity extends AppCompatActivity {
         tvDisponibilidad.setText(book.isAvailable() ? "Disponible" : "No disponible");
         tvISBN.setText(book.getIsbn());
     }
+
+
 }
