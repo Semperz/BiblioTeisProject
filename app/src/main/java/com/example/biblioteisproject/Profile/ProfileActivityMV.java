@@ -1,5 +1,7 @@
 package com.example.biblioteisproject.Profile;
 
+import android.graphics.Color;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -8,8 +10,12 @@ import com.example.biblioteisproject.API.models.BookLending;
 import com.example.biblioteisproject.API.retrofit.ApiClient;
 import com.example.biblioteisproject.API.retrofit.ApiService;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,12 +51,12 @@ public class ProfileActivityMV extends ViewModel {
                     // Filtramos los préstamos que corresponden al usuario específico
                     for (BookLending lending : lendings) {
                         if (lending.getUserId() == userId) {
-                            // Obtener el libro asociado al préstamo
-                            getBookById(lending.getBookId(), lendedBooks);
+                            getBookById(lending.getBookId(), lendedBooks, lending.getLendDate());
                         }
                     }
 
-                    // Actualizamos la lista de libros prestados en el LiveData
+                    // Filtrar y ordenar por fecha
+                    sortBooksByLendDate(lendedBooks);
                     books.setValue(lendedBooks);
                 }
             }
@@ -62,8 +68,7 @@ public class ProfileActivityMV extends ViewModel {
         });
     }
 
-    // Método para obtener un libro por su ID y agregarlo a la lista
-    private void getBookById(int bookId, List<Book> lendedBooks) {
+    private void getBookById(int bookId, List<Book> lendedBooks, String lendDate) {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
 
         // Llamamos a la API para obtener el libro por su ID
@@ -73,8 +78,11 @@ public class ProfileActivityMV extends ViewModel {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // Añadimos el libro a la lista de libros prestados
-                    lendedBooks.add(response.body());
+                    Book book = response.body();
+                    book.setBookLendings(Collections.singletonList(new BookLending()));
+                    book.getBookLendings().get(0).setLendDate(lendDate);
+
+                    lendedBooks.add(book);
                     books.setValue(lendedBooks); // Actualizamos la lista de libros
                 }
             }
@@ -82,6 +90,26 @@ public class ProfileActivityMV extends ViewModel {
             @Override
             public void onFailure(Call<Book> call, Throwable t) {
                 // Manejo de error
+            }
+        });
+    }
+
+    // Método para ordenar los libros por fecha de préstamo
+    private void sortBooksByLendDate(List<Book> lendedBooks) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Ordenamos los libros por fecha de préstamo (más reciente primero)
+        Collections.sort(lendedBooks, new Comparator<Book>() {
+            @Override
+            public int compare(Book o1, Book o2) {
+                try {
+                    Date date1 = sdf.parse(o1.getBookLendings().get(0).getLendDate());
+                    Date date2 = sdf.parse(o2.getBookLendings().get(0).getLendDate());
+                    return date2.compareTo(date1); // Orden inverso, más reciente primero
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return 0;
+                }
             }
         });
     }
