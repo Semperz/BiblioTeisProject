@@ -37,7 +37,7 @@ public class MenuWindowMV extends ViewModel {
         bookRepository.getBooks(new BookRepository.ApiCallback<List<Book>>() {
             @Override
             public void onSuccess(List<Book> result) {
-                for (int i = 0; i < 3; i++){
+                for (int i = 0; i < 1; i++){
                     addBook(result.get(new Random().nextInt(result.size())));
                 }
             }

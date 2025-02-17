@@ -16,6 +16,7 @@ import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.AvailableBooks.AvailableBooks;
 import com.example.biblioteisproject.AvailableBooks.AvailableBooksMV;
 import com.example.biblioteisproject.AvailableBooks.BooksListAdapter;
+import com.example.biblioteisproject.Profile.ProfileActivity;
 import com.example.biblioteisproject.R;
 import com.example.biblioteisproject.details.BookDetailActivity;
 
@@ -48,7 +49,10 @@ public class MenuWindow extends AppCompatActivity {
         });
 
         buttonP.setOnClickListener(view -> {
-            Toast.makeText(MenuWindow.this, "Botón 2 presionado", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ProfileActivity.class);
+            intent.putExtra("user", user);
+            startActivity(intent);
+
 
         });
 
