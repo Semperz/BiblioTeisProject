@@ -38,9 +38,7 @@ public class AvailableBooksMV extends ViewModel {
             @Override
             public void onSuccess(List<Book> result) {
                 for (Book book : result){
-                    if (book.isAvailable()){
-                        addBook(book);
-                    }
+                    addBook(book);
                 }
             }
             @Override

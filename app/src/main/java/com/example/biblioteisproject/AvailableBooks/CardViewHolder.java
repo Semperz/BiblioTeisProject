@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.biblioteisproject.R;
 
-class CardViewHolder extends RecyclerView.ViewHolder {
+public class CardViewHolder extends RecyclerView.ViewHolder {
     ImageView imagen;
     TextView tvTitulo, tvAutor, tvFechaPubli;
     Button btnDetalles;

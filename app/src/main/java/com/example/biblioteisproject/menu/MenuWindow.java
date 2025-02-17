@@ -8,11 +8,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.AvailableBooks.AvailableBooks;
+import com.example.biblioteisproject.AvailableBooks.AvailableBooksMV;
+import com.example.biblioteisproject.AvailableBooks.BooksListAdapter;
 import com.example.biblioteisproject.R;
 import com.example.biblioteisproject.details.BookDetailActivity;
 
@@ -21,6 +24,7 @@ public class MenuWindow extends AppCompatActivity {
     RecyclerView recommendedBooks;
     RecyclerView newBooks;
     Button buttonL, buttonP;
+    private MenuWindowMV menuWindowMV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,9 @@ public class MenuWindow extends AppCompatActivity {
         // Inicializa los botones
         buttonL = findViewById(R.id.buttonLibros);
         buttonP = findViewById(R.id.buttonPerfil);
+
+        menuWindowMV = new ViewModelProvider(this).get(MenuWindowMV.class);
+
 
 
         buttonL.setOnClickListener(view -> {
@@ -48,55 +55,18 @@ public class MenuWindow extends AppCompatActivity {
 
         // Configura los RecyclerViews
         recommendedBooks = findViewById(R.id.recommendedBooks);
-        recommendedBooks.setLayoutManager(new LinearLayoutManager(this));
-        recommendedBooks.setAdapter(new BookAdapter());
-
         newBooks = findViewById(R.id.newBooks);
+
+        menuWindowMV.books.observe(this, books -> {
+            recommendedBooks.setAdapter(new BooksListAdapter(books));
+        });
+        recommendedBooks.setLayoutManager(new LinearLayoutManager(this));
+
+
+        menuWindowMV.books.observe(this, books -> {
+            newBooks.setAdapter(new BooksListAdapter(books));
+        });
         newBooks.setLayoutManager(new LinearLayoutManager(this));
-        newBooks.setAdapter(new BookAdapter());
     }
 
-    class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
-
-        @Override
-        public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(R.layout.fragment_available_books, parent, false);
-            return new BookViewHolder(view);
-        }
-
-
-        @Override
-        public void onBindViewHolder(BookViewHolder holder, int position) {
-            holder.bind();
-        }
-
-        @Override
-        public int getItemCount() {
-            return 4; // Puedes cambiar esto según la cantidad de libros que deseas mostrar
-        }
-
-        class BookViewHolder extends RecyclerView.ViewHolder {
-
-            Button btnDetalles;
-
-            public BookViewHolder(View itemView) {
-                super(itemView);
-                btnDetalles = itemView.findViewById(R.id.btnDetalles);
-            }
-
-            public void bind() {
-                // Lógica para vincular datos al ViewHolder (por ejemplo, imagenes o texto)
-            }
-
-            private View.OnClickListener listener(int position){
-                return new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MenuWindow.this, BookDetailActivity.class);
-                        intent.putExtra("book", position);
-                    }
-                };
-            }
-        }
-    }
 }
