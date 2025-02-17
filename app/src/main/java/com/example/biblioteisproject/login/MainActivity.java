@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.API.repository.BookRepository;
+import com.example.biblioteisproject.API.repository.UserProvider;
 import com.example.biblioteisproject.API.repository.UserRepository;
 import com.example.biblioteisproject.menu.MenuWindow;
 import com.example.biblioteisproject.R;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         vm = new ViewModelProvider(this).get(MainActivityVM.class);
         vm.user.observe(this, (User user) -> {
             Intent intent = new Intent(this, MenuWindow.class);
-            intent.putExtra("user", user);
+            UserProvider.setInstance(user);
             startActivity(intent);
         });
         btnLogin.setOnClickListener(view -> {

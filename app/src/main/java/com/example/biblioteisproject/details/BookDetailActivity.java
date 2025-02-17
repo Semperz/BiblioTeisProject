@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.biblioteisproject.API.models.Book;
 import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.API.repository.BookLendingRepository;
+import com.example.biblioteisproject.API.repository.UserProvider;
 import com.example.biblioteisproject.R;
 
 public class BookDetailActivity extends AppCompatActivity {
@@ -59,7 +60,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
     protected void putData() {
         book = (Book) getIntent().getSerializableExtra("book");
-        user = (User) getIntent().getSerializableExtra("user");
+        user = UserProvider.getInstance();
 
         ImgLibro.setImageResource(R.drawable.imagen_no_disponible);
         tvTitle.setText(book.getTitle());

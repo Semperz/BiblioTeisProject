@@ -4,15 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 public class User implements Serializable {
+
     private int id;
     private String name;
     private String email;
     private String passwordHash;
     private String dateJoined;
     private List<BookLending> bookLendings;
-
     private String profilePicture;
-    // Getters & Setters
 
 
     public int getId() {
@@ -70,6 +69,8 @@ public class User implements Serializable {
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
     }
+
+
 
     @Override
     public String toString() {

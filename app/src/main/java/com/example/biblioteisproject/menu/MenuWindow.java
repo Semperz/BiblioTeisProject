@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.biblioteisproject.API.models.User;
+import com.example.biblioteisproject.API.repository.UserProvider;
 import com.example.biblioteisproject.AvailableBooks.AvailableBooks;
 import com.example.biblioteisproject.AvailableBooks.AvailableBooksMV;
 import com.example.biblioteisproject.AvailableBooks.BooksListAdapter;
@@ -31,8 +32,7 @@ public class MenuWindow extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_window);
-
-        User user = (User) getIntent().getSerializableExtra("user");
+        User user = UserProvider.getInstance();
 
         // Inicializa los botones
         buttonL = findViewById(R.id.buttonLibros);
@@ -44,13 +44,11 @@ public class MenuWindow extends AppCompatActivity {
 
         buttonL.setOnClickListener(view -> {
             Intent intent = new Intent(this, AvailableBooks.class);
-            intent.putExtra("user", user);
             startActivity(intent);
         });
 
         buttonP.setOnClickListener(view -> {
             Intent intent = new Intent(this, ProfileActivity.class);
-            intent.putExtra("user", user);
             startActivity(intent);
         });
 
