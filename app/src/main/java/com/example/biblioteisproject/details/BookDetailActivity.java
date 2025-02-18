@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.biblioteisproject.API.models.Book;
 import com.example.biblioteisproject.API.models.User;
@@ -24,14 +25,18 @@ public class BookDetailActivity extends AppCompatActivity {
     User user;
     BookLendingRepository bookLendingRepository;
 
+    BookDetailVM bookDetailVM;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
 
         inicializer();
+        bookDetailVM = new ViewModelProvider(this).get(BookDetailVM.class);
         putData();
         updateUI();
+
 
 /*        // Botón para prestar el libro
         btnPrestar.setOnClickListener(view -> lendBook());
@@ -58,9 +63,11 @@ public class BookDetailActivity extends AppCompatActivity {
         bookLendingRepository = new BookLendingRepository();
     }
 
+
     protected void putData() {
         book = (Book) getIntent().getSerializableExtra("book");
         user = UserProvider.getInstance();
+        bookDetailVM.getLendings();
 
         ImgLibro.setImageResource(R.drawable.imagen_no_disponible);
         tvTitle.setText(book.getTitle());
@@ -79,10 +86,15 @@ public class BookDetailActivity extends AppCompatActivity {
             btnPrestar.setEnabled(true);
             btnDevolver.setEnabled(false);
             btnDevolver.setBackgroundTintList(getResources().getColorStateList(R.color.gray));
-        } else {
+        } else if (bookDetailVM.isLentTo(user.getId())) {
             btnDevolver.setEnabled(true);
             btnPrestar.setEnabled(false);
             btnPrestar.setBackgroundTintList(getResources().getColorStateList(R.color.gray));
+        }else {
+            btnPrestar.setEnabled(false);
+            btnDevolver.setEnabled(false);
+            btnPrestar.setBackgroundTintList(getResources().getColorStateList(R.color.gray));
+            btnDevolver.setBackgroundTintList(getResources().getColorStateList(R.color.gray));
         }
 
     }
