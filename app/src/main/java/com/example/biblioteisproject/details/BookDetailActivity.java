@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.biblioteisproject.API.models.Book;
 import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.API.repository.BookLendingRepository;
+import com.example.biblioteisproject.API.repository.BookRepository;
 import com.example.biblioteisproject.API.repository.UserProvider;
 import com.example.biblioteisproject.R;
 
@@ -35,14 +36,16 @@ public class BookDetailActivity extends AppCompatActivity {
         inicializer();
         bookDetailVM = new ViewModelProvider(this).get(BookDetailVM.class);
         putData();
+
+
         updateUI();
 
 
-/*        // Botón para prestar el libro
+        // Botón para prestar el libro
         btnPrestar.setOnClickListener(view -> lendBook());
 
         // Botón para devolver el libro
-        btnDevolver.setOnClickListener(view -> returnBook());*/
+        btnDevolver.setOnClickListener(view -> returnBook());
 
         // Botón para volver
         btnVolver.setOnClickListener(view -> finish());
@@ -84,10 +87,12 @@ public class BookDetailActivity extends AppCompatActivity {
 
         if (available) {
             btnPrestar.setEnabled(true);
+            btnPrestar.setBackgroundTintList(getResources().getColorStateList(R.color.teal_700));
             btnDevolver.setEnabled(false);
             btnDevolver.setBackgroundTintList(getResources().getColorStateList(R.color.gray));
         } else if (bookDetailVM.isLentTo(user.getId())) {
             btnDevolver.setEnabled(true);
+            btnDevolver.setBackgroundTintList(getResources().getColorStateList(R.color.teal_700));
             btnPrestar.setEnabled(false);
             btnPrestar.setBackgroundTintList(getResources().getColorStateList(R.color.gray));
         }else {
@@ -96,35 +101,36 @@ public class BookDetailActivity extends AppCompatActivity {
             btnPrestar.setBackgroundTintList(getResources().getColorStateList(R.color.gray));
             btnDevolver.setBackgroundTintList(getResources().getColorStateList(R.color.gray));
         }
-
     }
 
-    /** 🔹 Prestar un libro *//*
-    protected void lendBook() {
-        bookLendingRepository.lendBook(user.getId(), book.getId(), (response) -> {
 
-            if (response) {
-                Toast.makeText(this, "Libro prestado con éxito", Toast.LENGTH_SHORT).show();
+    protected void lendBook() {
+        bookLendingRepository.lendBook(book.getId(), user.getId(), new BookRepository.ApiCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean result) {
                 book.setAvailable(false);
                 updateUI();
-            } else {
-                Toast.makeText(this, "Error al prestar el libro", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
             }
         });
     }
 
-    *//** 🔹 Devolver un libro *//*
     protected void returnBook() {
-        bookLendingRepository.returnBook(book.getId(), (response) -> {
-            runOnUiThread(() -> {
-                if (response) {
-                    Toast.makeText(this, "Libro devuelto con éxito", Toast.LENGTH_SHORT).show();
-                    book.setAvailable(true);
-                    updateUI();
-                } else {
-                    Toast.makeText(this, "Error al devolver el libro", Toast.LENGTH_SHORT).show();
-                }
-            });
+        bookLendingRepository.returnBook(book.getId(), new BookRepository.ApiCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean result) {
+                book.setAvailable(true);
+                updateUI();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
         });
-    }*/
+    }
 }

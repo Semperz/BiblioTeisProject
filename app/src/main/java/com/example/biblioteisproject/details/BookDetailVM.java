@@ -24,24 +24,16 @@ public class BookDetailVM extends ViewModel {
         bookLendingRepository.getAllLendings(new BookRepository.ApiCallback<List<BookLending>>() {
             @Override
             public void onSuccess(List<BookLending> result) {
-                lendings.postValue(result); // 🔹 Usar postValue en hilos secundarios
+                lendings.postValue(result);
             }
 
             @Override
             public void onFailure(Throwable t) {
-                // Manejo de errores: podrías registrar el error o mostrar un mensaje
                 t.printStackTrace();
             }
         });
     }
 
-    public void addLending(BookLending bookLending) {
-        List<BookLending> lista = lendings.getValue();
-        if (lista != null) {
-            lista.add(bookLending);
-            lendings.setValue(lista); // 🔹 Actualiza LiveData
-        }
-    }
 
     public boolean isLentTo(int idUser) {
         List<BookLending> lista = lendings.getValue();
