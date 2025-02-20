@@ -100,7 +100,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }
                 Date date1 = sdf.parse(o1.getBookLendings().get(0).getLendDate());
                 Date date2 = sdf.parse(o2.getBookLendings().get(0).getLendDate());
-                return date2.compareTo(date1);
+                return date1.compareTo(date2); // Más antiguos primero
             } catch (Exception e) {
                 e.printStackTrace();
                 return 0;
