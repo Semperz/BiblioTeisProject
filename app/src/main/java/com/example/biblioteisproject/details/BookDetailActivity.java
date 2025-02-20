@@ -11,11 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.biblioteisproject.API.models.Book;
+import com.example.biblioteisproject.API.models.BookLending;
 import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.API.repository.BookLendingRepository;
 import com.example.biblioteisproject.API.repository.BookRepository;
 import com.example.biblioteisproject.API.repository.UserProvider;
 import com.example.biblioteisproject.R;
+
+import java.util.List;
 
 public class BookDetailActivity extends AppCompatActivity {
 
@@ -25,7 +28,7 @@ public class BookDetailActivity extends AppCompatActivity {
     Book book;
     User user;
     BookLendingRepository bookLendingRepository;
-
+    List<BookLending> booklends;
     BookDetailVM bookDetailVM;
 
     @Override
@@ -70,7 +73,6 @@ public class BookDetailActivity extends AppCompatActivity {
     protected void putData() {
         book = (Book) getIntent().getSerializableExtra("book");
         user = UserProvider.getInstance();
-        bookDetailVM.getLendings();
 
         ImgLibro.setImageResource(R.drawable.imagen_no_disponible);
         tvTitle.setText(book.getTitle());
@@ -90,7 +92,7 @@ public class BookDetailActivity extends AppCompatActivity {
             btnPrestar.setBackgroundTintList(getResources().getColorStateList(R.color.teal_700));
             btnDevolver.setEnabled(false);
             btnDevolver.setBackgroundTintList(getResources().getColorStateList(R.color.gray));
-        } else if (bookDetailVM.isLentTo(user.getId())) {
+        } else if (bookDetailVM.isLentTo(user, book.getId())) {
             btnDevolver.setEnabled(true);
             btnDevolver.setBackgroundTintList(getResources().getColorStateList(R.color.teal_700));
             btnPrestar.setEnabled(false);
@@ -109,6 +111,7 @@ public class BookDetailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Boolean result) {
                 book.setAvailable(false);
+                user.getBookLendings().add(bookDetailVM.getLendings().getValue().get(0));
                 updateUI();
             }
 
