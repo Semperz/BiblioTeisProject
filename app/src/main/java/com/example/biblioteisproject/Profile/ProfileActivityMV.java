@@ -1,6 +1,7 @@
 package com.example.biblioteisproject.Profile;
 
 import android.graphics.Color;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -9,6 +10,7 @@ import com.example.biblioteisproject.API.models.Book;
 import com.example.biblioteisproject.API.models.BookLending;
 import com.example.biblioteisproject.API.retrofit.ApiClient;
 import com.example.biblioteisproject.API.retrofit.ApiService;
+import com.example.biblioteisproject.login.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,9 +56,6 @@ public class ProfileActivityMV extends ViewModel {
                             getBookById(lending.getBookId(), lendedBooks, lending.getLendDate());
                         }
                     }
-
-                    // Filtrar y ordenar por fecha
-                    sortBooksByLendDate(lendedBooks);
                     books.setValue(lendedBooks);
                 }
             }
@@ -94,23 +93,5 @@ public class ProfileActivityMV extends ViewModel {
         });
     }
 
-    // Método para ordenar los libros por fecha de préstamo
-    private void sortBooksByLendDate(List<Book> lendedBooks) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-        // Ordenamos los libros por fecha de préstamo (más reciente primero)
-        Collections.sort(lendedBooks, new Comparator<Book>() {
-            @Override
-            public int compare(Book o1, Book o2) {
-                try {
-                    Date date1 = sdf.parse(o1.getBookLendings().get(0).getLendDate());
-                    Date date2 = sdf.parse(o2.getBookLendings().get(0).getLendDate());
-                    return date2.compareTo(date1); // Orden inverso, más reciente primero
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return 0;
-                }
-            }
-        });
-    }
 }
