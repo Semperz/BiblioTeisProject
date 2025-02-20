@@ -12,8 +12,8 @@ import com.example.biblioteisproject.API.repository.BookRepository;
 import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import androidx.lifecycle.LiveData;
 
 public class BookDetailVM extends ViewModel {
     MutableLiveData<List<BookLending>> MDlendings;
@@ -27,9 +27,10 @@ public class BookDetailVM extends ViewModel {
     }
 
 
-    public LiveData<List<BookLending>> getLendings() {
+    public MutableLiveData<List<BookLending>> getLendings() {
         return MDlendings;
     }
+
 
     public void fetchLendings() {
         bookLendingRepository.getAllLendings(new BookRepository.ApiCallback<List<BookLending>>() {
@@ -46,13 +47,10 @@ public class BookDetailVM extends ViewModel {
     }
 
 
-    public boolean isLentTo(User user, int bookId) {
-        List<BookLending> lista = MDlendings.getValue();
-        if (lista != null) {
-            for (BookLending lending : lista) {
-                if (lending.getUserId() == user.getId() && lending.getBookId() == bookId) {
-                    return true;
-                }
+    public boolean isLentTo(int userId, int bookId) {
+        for (BookLending lending : Objects.requireNonNull(MDlendings.getValue())) {
+            if (lending.getUserId() == userId && lending.getBookId() == bookId) {
+                return true;
             }
         }
         return false;

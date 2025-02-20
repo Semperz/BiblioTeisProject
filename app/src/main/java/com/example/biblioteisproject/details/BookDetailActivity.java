@@ -28,7 +28,6 @@ public class BookDetailActivity extends AppCompatActivity {
     Book book;
     User user;
     BookLendingRepository bookLendingRepository;
-    List<BookLending> booklends;
     BookDetailVM bookDetailVM;
 
     @Override
@@ -39,13 +38,18 @@ public class BookDetailActivity extends AppCompatActivity {
         inicializer();
         bookDetailVM = new ViewModelProvider(this).get(BookDetailVM.class);
         putData();
-
-
         updateUI();
+
+        bookDetailVM.getLendings().observe(this, bookLendings -> {
+            updateUI();
+        });
+
+
 
 
         // Botón para prestar el libro
-        btnPrestar.setOnClickListener(view -> lendBook());
+        btnPrestar.setOnClickListener(view ->
+                lendBook());
 
         // Botón para devolver el libro
         btnDevolver.setOnClickListener(view -> returnBook());
@@ -89,7 +93,7 @@ public class BookDetailActivity extends AppCompatActivity {
             btnPrestar.setBackgroundTintList(getResources().getColorStateList(R.color.teal_700));
             btnDevolver.setEnabled(false);
             btnDevolver.setBackgroundTintList(getResources().getColorStateList(R.color.gray));
-        } else if (bookDetailVM.isLentTo(user, book.getId())) {
+        } else if (bookDetailVM.isLentTo(user.getId(), book.getId())) {
             btnDevolver.setEnabled(true);
             btnDevolver.setBackgroundTintList(getResources().getColorStateList(R.color.teal_700));
             btnPrestar.setEnabled(false);
@@ -104,17 +108,17 @@ public class BookDetailActivity extends AppCompatActivity {
 
 
     protected void lendBook() {
-        bookLendingRepository.lendBook(book.getId(), user.getId(), new BookRepository.ApiCallback<Boolean>() {
+        bookLendingRepository.lendBook(user.getId(), book.getId(), new BookRepository.ApiCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean result) {
                 book.setAvailable(false);
-                user.getBookLendings().add(bookDetailVM.getLendings().getValue().get(0));
                 updateUI();
+                Toast.makeText(BookDetailActivity.this, "Se ha prestado el libro", Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onFailure(Throwable t) {
                 t.printStackTrace();
+                Toast.makeText(BookDetailActivity.this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -125,10 +129,12 @@ public class BookDetailActivity extends AppCompatActivity {
             public void onSuccess(Boolean result) {
                 book.setAvailable(true);
                 updateUI();
+                Toast.makeText(BookDetailActivity.this, "Se ha devuelto el libro", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Throwable t) {
+                Toast.makeText(BookDetailActivity.this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
