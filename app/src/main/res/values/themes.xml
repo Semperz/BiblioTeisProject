@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Tema base para la aplicación -->
-    <style name="Base.Theme.BiblioTeisProject" parent="Theme.Material3.DayNight">
+    <style name="Base.Theme.BiblioTeisProject" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Personaliza tu tema aquí -->
         <!-- Ejemplo de color primario -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
