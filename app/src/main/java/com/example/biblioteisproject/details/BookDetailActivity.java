@@ -24,7 +24,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
     ImageView ImgLibro;
     TextView tvTitle, tvAutor, tvFechaPubli, tvDisponibilidad, tvISBN;
-    Button btnPrestar, btnVolver, btnDevolver;
+    Button btnPrestar, btnDevolver;
     Book book;
     User user;
     BookLendingRepository bookLendingRepository;
@@ -50,8 +50,6 @@ public class BookDetailActivity extends AppCompatActivity {
         // Botón para devolver el libro
         btnDevolver.setOnClickListener(view -> returnBook());
 
-        // Botón para volver
-        btnVolver.setOnClickListener(view -> finish());
 
 
     }
@@ -65,7 +63,6 @@ public class BookDetailActivity extends AppCompatActivity {
         tvISBN = findViewById(R.id.tvISBN);
         btnPrestar = findViewById(R.id.btnPrestar);
         btnDevolver = findViewById(R.id.btnDevolver);
-        btnVolver = findViewById(R.id.btnVolver);
         bookLendingRepository = new BookLendingRepository();
     }
 

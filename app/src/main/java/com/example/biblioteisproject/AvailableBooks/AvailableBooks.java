@@ -2,11 +2,17 @@ package com.example.biblioteisproject.AvailableBooks;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuProvider;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +26,7 @@ public class AvailableBooks extends AppCompatActivity {
 
     TextView tvTitle;
     TextInputEditText etBuscarTitulo, etBuscarAutor;
-    Button btnBuscar, btnVolver;
+    Button btnBuscar;
     RecyclerView rvLibros;
     private AvailableBooksMV availableBooksMV;
 
@@ -45,10 +51,10 @@ public class AvailableBooks extends AppCompatActivity {
             availableBooksMV.getFilteredBooks(titulo, autor);
         });
 
-        btnVolver.setOnClickListener((view) -> {
-            Intent intent = new Intent(this, MenuWindow.class);
-            startActivity(intent);
-        });
+
+
+
+
     }
 
 
@@ -58,7 +64,6 @@ public class AvailableBooks extends AppCompatActivity {
         etBuscarTitulo = findViewById(R.id.etBuscarTitulo);
         etBuscarAutor = findViewById(R.id.etBuscarAutor);
         btnBuscar = findViewById(R.id.btnBuscar);
-        btnVolver = findViewById(R.id.btnVolver);
         rvLibros = findViewById(R.id.rvLibros);
     }
 }

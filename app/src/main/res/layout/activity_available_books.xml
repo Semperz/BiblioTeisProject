@@ -80,25 +80,13 @@
         android:id="@+id/rvLibros"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/btnBuscar"
-        app:layout_constraintBottom_toTopOf="@id/btnVolver"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:padding="8dp"
         android:background="@android:color/white"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-    <!-- Botón para volver -->
-    <Button
-        android:id="@+id/btnVolver"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:text="Volver"
-        android:textColor="@android:color/white"
-        android:backgroundTint="@color/gray"
-        android:drawableStart="@android:drawable/ic_menu_revert"
+        android:padding="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnBuscar" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
