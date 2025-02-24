@@ -1,25 +1,16 @@
 package com.example.biblioteisproject.AvailableBooks;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuProvider;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.R;
-import com.example.biblioteisproject.menu.MenuWindow;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class AvailableBooks extends AppCompatActivity {
@@ -28,7 +19,7 @@ public class AvailableBooks extends AppCompatActivity {
     TextInputEditText etBuscarTitulo, etBuscarAutor;
     Button btnBuscar;
     RecyclerView rvLibros;
-    private AvailableBooksMV availableBooksMV;
+    private AvailableBooksVM availableBooksVM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +28,9 @@ public class AvailableBooks extends AppCompatActivity {
         initializeViews();
 
 
-        availableBooksMV = new ViewModelProvider(this).get(AvailableBooksMV.class);
+        availableBooksVM = new ViewModelProvider(this).get(AvailableBooksVM.class);
 
-        availableBooksMV.books.observe(this, books -> {
+        availableBooksVM.books.observe(this, books -> {
             rvLibros.setAdapter(new BooksListAdapter(books));
         });
 
@@ -48,7 +39,7 @@ public class AvailableBooks extends AppCompatActivity {
         btnBuscar.setOnClickListener((view) -> {
             String titulo = etBuscarTitulo.getText().toString();
             String autor = etBuscarAutor.getText().toString();
-            availableBooksMV.getFilteredBooks(titulo, autor);
+            availableBooksVM.getFilteredBooks(titulo, autor);
         });
 
 

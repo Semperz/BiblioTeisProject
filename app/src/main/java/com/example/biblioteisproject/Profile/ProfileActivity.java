@@ -27,7 +27,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView tvName, tvEmail, tvJoinDate;
     private RecyclerView rvBooks;
     private User currentUser;
-    private ProfileActivityMV profileWindowMv;
+    private ProfileActivityVM profileWindowMv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
         currentUser = UserProvider.getInstance();
 
         // Inicializar el ViewModel
-        profileWindowMv = new ViewModelProvider(this).get(ProfileActivityMV.class);
+        profileWindowMv = new ViewModelProvider(this).get(ProfileActivityVM.class);
 
         if (currentUser != null) {
             // Establecer los datos del usuario en la UI

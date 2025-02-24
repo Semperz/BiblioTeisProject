@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MenuWindowMV extends ViewModel {
+public class MenuWindowVM extends ViewModel {
 
     MutableLiveData<Book> book;
     MutableLiveData<List<Book>> books;
 
-    public MenuWindowMV(){
+    public MenuWindowVM(){
         book = new MutableLiveData<>();
         books = new MutableLiveData<>();
         books.setValue(new ArrayList<>());

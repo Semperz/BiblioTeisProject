@@ -5,10 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,17 +17,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.API.repository.UserProvider;
 import com.example.biblioteisproject.AvailableBooks.AvailableBooks;
-import com.example.biblioteisproject.AvailableBooks.AvailableBooksMV;
 import com.example.biblioteisproject.AvailableBooks.BooksListAdapter;
 import com.example.biblioteisproject.Profile.ProfileActivity;
 import com.example.biblioteisproject.R;
-import com.example.biblioteisproject.details.BookDetailActivity;
 
 public class MenuWindow extends AppCompatActivity {
 
     RecyclerView recommendedBooks;
     RecyclerView newBooks;
-    private MenuWindowMV menuWindowMV;
+    private MenuWindowVM menuWindowVM;
     Toolbar TbMenu;
 
 
@@ -43,20 +37,20 @@ public class MenuWindow extends AppCompatActivity {
 
         TbMenu = findViewById(R.id.TbMainMenu);
 
-        menuWindowMV = new ViewModelProvider(this).get(MenuWindowMV.class);
+        menuWindowVM = new ViewModelProvider(this).get(MenuWindowVM.class);
 
 
         // Configura los RecyclerViews
         recommendedBooks = findViewById(R.id.recommendedBooks);
         newBooks = findViewById(R.id.newBooks);
 
-        menuWindowMV.books.observe(this, books -> {
+        menuWindowVM.books.observe(this, books -> {
             recommendedBooks.setAdapter(new BooksListAdapter(books));
         });
         recommendedBooks.setLayoutManager(new LinearLayoutManager(this));
 
 
-        menuWindowMV.books.observe(this, books -> {
+        menuWindowVM.books.observe(this, books -> {
             newBooks.setAdapter(new BooksListAdapter(books));
         });
         newBooks.setLayoutManager(new LinearLayoutManager(this));

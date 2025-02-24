@@ -11,11 +11,11 @@ import com.example.biblioteisproject.API.repository.BookRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AvailableBooksMV extends ViewModel {
+public class AvailableBooksVM extends ViewModel {
     MutableLiveData<Book> book;
     MutableLiveData<List<Book>> books;
 
-    public AvailableBooksMV(){
+    public AvailableBooksVM(){
         book = new MutableLiveData<>();
         books = new MutableLiveData<>();
         books.setValue(new ArrayList<>());

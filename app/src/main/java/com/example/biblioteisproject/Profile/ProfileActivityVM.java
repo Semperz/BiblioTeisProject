@@ -1,8 +1,5 @@
 package com.example.biblioteisproject.Profile;
 
-import android.graphics.Color;
-import android.widget.Toast;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -10,24 +7,20 @@ import com.example.biblioteisproject.API.models.Book;
 import com.example.biblioteisproject.API.models.BookLending;
 import com.example.biblioteisproject.API.retrofit.ApiClient;
 import com.example.biblioteisproject.API.retrofit.ApiService;
-import com.example.biblioteisproject.login.MainActivity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProfileActivityMV extends ViewModel {
+public class ProfileActivityVM extends ViewModel {
 
     MutableLiveData<List<Book>> books;
 
-    public ProfileActivityMV() {
+    public ProfileActivityVM() {
         books = new MutableLiveData<>();
         books.setValue(new ArrayList<>());
     }
