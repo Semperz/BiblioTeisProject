@@ -44,8 +44,9 @@ public class BookDetailActivity extends AppCompatActivity {
             updateUI();
         });
 
-
-
+        bookDetailVM.getBook().observe(this, book -> {
+            updateUI();
+        });
 
         // Botón para prestar el libro
         btnPrestar.setOnClickListener(view ->
@@ -89,16 +90,19 @@ public class BookDetailActivity extends AppCompatActivity {
         boolean available = book.isAvailable();
 
         if (available) {
+            tvDisponibilidad.setText("Disponible");
             btnPrestar.setEnabled(true);
             btnPrestar.setBackgroundTintList(getResources().getColorStateList(R.color.teal_700));
             btnDevolver.setEnabled(false);
             btnDevolver.setBackgroundTintList(getResources().getColorStateList(R.color.gray));
         } else if (bookDetailVM.isLentTo(user.getId(), book.getId())) {
+            tvDisponibilidad.setText("Prestado");
             btnDevolver.setEnabled(true);
             btnDevolver.setBackgroundTintList(getResources().getColorStateList(R.color.teal_700));
             btnPrestar.setEnabled(false);
             btnPrestar.setBackgroundTintList(getResources().getColorStateList(R.color.gray));
         }else {
+            tvDisponibilidad.setText("No disponible");
             btnPrestar.setEnabled(false);
             btnDevolver.setEnabled(false);
             btnPrestar.setBackgroundTintList(getResources().getColorStateList(R.color.gray));

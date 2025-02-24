@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.biblioteisproject.API.models.Book;
 import com.example.biblioteisproject.API.models.BookLending;
 import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.API.repository.BookLendingRepository;
@@ -18,17 +19,23 @@ import java.util.Objects;
 public class BookDetailVM extends ViewModel {
     MutableLiveData<List<BookLending>> MDlendings;
     BookLendingRepository bookLendingRepository = new BookLendingRepository();
-
+    MutableLiveData<Book> book;
+    BookRepository bookRepository = new BookRepository();
 
     public BookDetailVM() {
         MDlendings = new MutableLiveData<>();
         MDlendings.setValue(new ArrayList<>());
+        book = new MutableLiveData<>();
         fetchLendings();
     }
 
 
     public MutableLiveData<List<BookLending>> getLendings() {
         return MDlendings;
+    }
+
+    public MutableLiveData<Book> getBook() {
+        return book;
     }
 
 
@@ -46,15 +53,30 @@ public class BookDetailVM extends ViewModel {
         });
     }
 
+    public void fetchBook(int id) {
+        bookRepository.getBookById(id, new BookRepository.ApiCallback<Book>() {
+            @Override
+            public void onSuccess(Book result) {
+                book.postValue(result);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
 
     public boolean isLentTo(int userId, int bookId) {
-        for (BookLending lending : Objects.requireNonNull(MDlendings.getValue())) {
+        for (BookLending lending : getLendings().getValue()){
             if (lending.getUserId() == userId && lending.getBookId() == bookId) {
                 return true;
             }
         }
+
         return false;
     }
-
 }
+
+
 
