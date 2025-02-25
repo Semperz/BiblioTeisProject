@@ -35,7 +35,7 @@ public class BooksListAdapter extends RecyclerView.Adapter {
         cardViewHolder.getTvFechaPubli().setText(book.getPublishedDate());
         cardViewHolder.getBtnDetalles().setOnClickListener((view) -> {
             Intent intent = new Intent(view.getContext(), BookDetailActivity.class);
-            intent.putExtra("book", books.get(position));
+            intent.putExtra("book", books.get(position).getId());
             view.getContext().startActivity(intent);
         });
     }

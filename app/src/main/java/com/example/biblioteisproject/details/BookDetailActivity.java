@@ -25,7 +25,6 @@ public class BookDetailActivity extends AppCompatActivity {
     ImageView ImgLibro;
     TextView tvTitle, tvAutor, tvFechaPubli, tvDisponibilidad, tvISBN;
     Button btnPrestar, btnDevolver;
-    Book book;
     User user;
     BookLendingRepository bookLendingRepository;
     BookDetailVM bookDetailVM;
@@ -38,14 +37,17 @@ public class BookDetailActivity extends AppCompatActivity {
         inicializer();
         bookDetailVM = new ViewModelProvider(this).get(BookDetailVM.class);
         putData();
-        updateUI();
 
         bookDetailVM.getLendings().observe(this, bookLendings -> {
-            updateUI();
+            updateUI(bookDetailVM.book.getValue());
         });
-        bookDetailVM.fetchBook(book.getId());
+        
+        int _book = getIntent().getIntExtra("book", -1);
+
+        assert _book != -1;
+        bookDetailVM.fetchBook(_book);
         bookDetailVM.getBook().observe(this, book -> {
-            updateUI();
+            updateUI(book);
         });
 
         // Botón para prestar el libro
@@ -73,20 +75,28 @@ public class BookDetailActivity extends AppCompatActivity {
 
 
     protected void putData() {
-        book = (Book) getIntent().getSerializableExtra("book");
+
+        Book book = bookDetailVM.book.getValue();
+
         user = UserProvider.getInstance();
 
         ImgLibro.setImageResource(R.drawable.imagen_no_disponible);
-        tvTitle.setText(book.getTitle());
-        tvAutor.setText(book.getAuthor());
-        tvFechaPubli.setText(book.getPublishedDate());
-        tvDisponibilidad.setText(book.isAvailable() ? "Disponible" : "No disponible");
-        tvISBN.setText(book.getIsbn());
+
+        if(book != null) {
+            tvTitle.setText(book.getTitle());
+            tvAutor.setText(book.getAuthor());
+            tvFechaPubli.setText(book.getPublishedDate());
+            tvDisponibilidad.setText(book.isAvailable() ? "Disponible" : "No disponible");
+            tvISBN.setText(book.getIsbn());
+        }
     }
 
 
     @SuppressLint("UseCompatLoadingForColorStateLists")
-    protected void updateUI() {
+    protected void updateUI(Book book) {
+
+        if(book == null)
+            return;
         boolean available = book.isAvailable();
 
         if (available) {
@@ -112,11 +122,14 @@ public class BookDetailActivity extends AppCompatActivity {
 
 
     protected void lendBook() {
+        Book book = bookDetailVM.book.getValue();
+        if(book == null)
+            return;
         bookLendingRepository.lendBook(user.getId(), book.getId(), new BookRepository.ApiCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean result) {
                 book.setAvailable(false);
-                updateUI();
+                updateUI(book);
                 Toast.makeText(BookDetailActivity.this, "Se ha prestado el libro", Toast.LENGTH_SHORT).show();
             }
             @Override
@@ -128,11 +141,14 @@ public class BookDetailActivity extends AppCompatActivity {
     }
 
     protected void returnBook() {
+        Book book = bookDetailVM.book.getValue();
+        if(book == null)
+            return;
         bookLendingRepository.returnBook(book.getId(), new BookRepository.ApiCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean result) {
                 book.setAvailable(true);
-                updateUI();
+                updateUI(book);
                 Toast.makeText(BookDetailActivity.this, "Se ha devuelto el libro", Toast.LENGTH_SHORT).show();
             }
 
