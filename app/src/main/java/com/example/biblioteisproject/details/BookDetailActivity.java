@@ -43,7 +43,7 @@ public class BookDetailActivity extends AppCompatActivity {
         bookDetailVM.getLendings().observe(this, bookLendings -> {
             updateUI();
         });
-
+        bookDetailVM.fetchBook(book.getId());
         bookDetailVM.getBook().observe(this, book -> {
             updateUI();
         });
