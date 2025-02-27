@@ -53,7 +53,8 @@ public class BookDetailActivity extends AppCompatActivity {
                 lendBook());
 
         // Botón para devolver el libro
-        btnDevolver.setOnClickListener(view -> returnBook());
+        btnDevolver.setOnClickListener(view ->
+                returnBook());
 
 
 

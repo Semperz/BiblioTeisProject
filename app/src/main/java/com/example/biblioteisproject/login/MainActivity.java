@@ -1,6 +1,9 @@
 package com.example.biblioteisproject.login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKey;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +21,8 @@ import com.example.biblioteisproject.API.repository.UserRepository;
 import com.example.biblioteisproject.menu.MenuWindow;
 import com.example.biblioteisproject.R;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 
@@ -27,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnLogin;
     private boolean loginSuccess = false;
     MainActivityVM vm;
+    private CredentialsManager credentialsManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,36 +44,19 @@ public class MainActivity extends AppCompatActivity {
             UserProvider.setInstance(user);
             startActivity(intent);
         });
-        btnLogin.setOnClickListener(view -> {
-            if (validarCredenciales()) {
-                Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-            }
-        });
 
+        if (credentialsManager.hasSavedCredentials()) {
+            String email = credentialsManager.getSavedEmail();
+            String passwordHash = credentialsManager.getSavedPasswordHash();
+            loginWithSavedCredentials(email, passwordHash);
+        } else {
+            btnLogin.setOnClickListener(view -> {
+                if (validarCredenciales()) {
+                    Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
-
-
-
-      /*  MainActivityVM vm = new ViewModelProvider(this).get(MainActivityVM.class);
-
-        vm.book.observe(this, (Book book) -> {
-            ((TextView)findViewById(R.id.name)).setText(book.getTitle());
-            ((TextView)findViewById(R.id.Autor)).setText(book.getAuthor());
-        });
-
-        BookRepository br = new BookRepository();
-
-        br.getBookById(1, new BookRepository.ApiCallback<Book>() {
-            @Override
-            public void onSuccess(Book result) {
-                vm.book.setValue(result);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });*/
 
     }
 
@@ -84,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     if (user.getEmail().equals(email) && user.getPasswordHash().equals(password)) {
                         loginSuccess = true;
                         vm.user.postValue(user);
+                        credentialsManager.saveCredentials(email, password);
                         break;
                     }
                 }
@@ -100,6 +90,33 @@ public class MainActivity extends AppCompatActivity {
 
         return loginSuccess;
     }
+
+    private void loginWithSavedCredentials(String email, String passwordHash) {
+        UserRepository userRepository = new UserRepository();
+        userRepository.getUsers(new BookRepository.ApiCallback<List<User>>() {
+            @Override
+            public void onSuccess(List<User> result) {
+                for (User user : result) {
+                    if (user.getEmail().equals(email) && user.getPasswordHash().equals(passwordHash)) {
+                        loginSuccess = true;
+                        vm.user.postValue(user);
+                        break;
+                    }
+                }
+                if (!loginSuccess) {
+                    tvErrorMessage.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(MainActivity.this, "Fallo conexion a la API", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+
 
     private void initializeViews() {
         etEmail = findViewById(R.id.etEmail);
