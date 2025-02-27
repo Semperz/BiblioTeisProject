@@ -36,8 +36,6 @@ public class BookDetailActivity extends AppCompatActivity {
 
         inicializer();
         bookDetailVM = new ViewModelProvider(this).get(BookDetailVM.class);
-        putData();
-
         bookDetailVM.getLendings().observe(this, bookLendings -> {
             updateUI(bookDetailVM.book.getValue());
         });
@@ -97,6 +95,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
         if(book == null)
             return;
+        putData();
         boolean available = book.isAvailable();
 
         if (available) {
@@ -129,6 +128,7 @@ public class BookDetailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Boolean result) {
                 book.setAvailable(false);
+                bookDetailVM.fetchLendings();
                 updateUI(book);
                 Toast.makeText(BookDetailActivity.this, "Se ha prestado el libro", Toast.LENGTH_SHORT).show();
             }
@@ -148,6 +148,7 @@ public class BookDetailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Boolean result) {
                 book.setAvailable(true);
+                bookDetailVM.fetchLendings();
                 updateUI(book);
                 Toast.makeText(BookDetailActivity.this, "Se ha devuelto el libro", Toast.LENGTH_SHORT).show();
             }
