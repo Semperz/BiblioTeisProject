@@ -128,6 +128,10 @@ public class BookDetailActivity extends AppCompatActivity {
         bookLendingRepository.lendBook(user.getId(), book.getId(), new BookRepository.ApiCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean result) {
+                if(!result){
+                    Toast.makeText(BookDetailActivity.this, "No se ha podido prestar el libro.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 book.setAvailable(false);
                 bookDetailVM.fetchLendings();
                 updateUI(book);
@@ -148,6 +152,12 @@ public class BookDetailActivity extends AppCompatActivity {
         bookLendingRepository.returnBook(book.getId(), new BookRepository.ApiCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean result) {
+                //El result de returnBook es si se ha realizado el retorno del libro con exito o no.
+                if(!result){
+                    Toast.makeText(BookDetailActivity.this, "No se ha podido devolver el libro.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 book.setAvailable(true);
                 bookDetailVM.fetchLendings();
                 updateUI(book);
