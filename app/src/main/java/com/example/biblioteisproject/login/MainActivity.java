@@ -30,12 +30,13 @@ public class MainActivity extends AppCompatActivity {
     private Button btnLogin;
     private boolean loginSuccess = false;
     MainActivityVM vm;
-    private CredentialsManager credentialsManager;
+    CredentialsManager credentialsManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeViews();
+        credentialsManager = new CredentialsManager(this);
         vm = new ViewModelProvider(this).get(MainActivityVM.class);
         vm.user.observe(this, (User user) -> {
             Intent intent = new Intent(this, MenuWindow.class);
@@ -43,16 +44,17 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        if (credentialsManager.hasSavedCredentials()) {
-            String email = credentialsManager.getSavedEmail();
-            String passwordHash = credentialsManager.getSavedPasswordHash();
-            loginWithSavedCredentials(email, passwordHash);
-        } else {
+        if (!credentialsManager.hasSavedCredentials()) {
             btnLogin.setOnClickListener(view -> {
                 if (validarCredenciales()) {
                     Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
                 }
             });
+
+        } else {
+            String email = credentialsManager.getSavedEmail();
+            String passwordHash = credentialsManager.getSavedPasswordHash();
+            loginWithSavedCredentials(email, passwordHash);
         }
 
 

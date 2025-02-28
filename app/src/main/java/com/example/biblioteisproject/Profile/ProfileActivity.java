@@ -1,10 +1,18 @@
 package com.example.biblioteisproject.Profile;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuProvider;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +22,8 @@ import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.API.repository.UserProvider;
 import com.example.biblioteisproject.AvailableBooks.BooksListAdapter;
 import com.example.biblioteisproject.R;
+import com.example.biblioteisproject.login.CredentialsManager;
+import com.example.biblioteisproject.login.MainActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,11 +38,16 @@ public class ProfileActivity extends AppCompatActivity {
     private RecyclerView rvBooks;
     private User currentUser;
     private ProfileActivityVM profileWindowMv;
+    private Toolbar TbProfile;
+    private CredentialsManager credentialsManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        TbProfile = findViewById(R.id.tbProfile);
+        credentialsManager = new CredentialsManager(this);
 
         // Referencias UI
         tvName = findViewById(R.id.tvName);
@@ -70,6 +85,32 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         rvBooks.setLayoutManager(new LinearLayoutManager(this));
+
+        setSupportActionBar(TbProfile);
+
+        addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.menu_perfil, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+
+                int id= menuItem.getItemId();
+
+                if (id == R.id.mbiCerrarSesion){
+                    credentialsManager.clearSavedCredentials();
+                    Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // asegura que
+                    startActivity(intent);
+                    finish();
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     // Método para formatear la fecha

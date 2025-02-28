@@ -35,7 +35,7 @@ public class MenuWindow extends AppCompatActivity {
         setContentView(R.layout.activity_menu_window);
         User user = UserProvider.getInstance();
 
-        TbMenu = findViewById(R.id.TbMainMenu);
+        TbMenu = findViewById(R.id.tbMenu);
 
         menuWindowVM = new ViewModelProvider(this).get(MenuWindowVM.class);
 

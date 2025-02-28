@@ -50,4 +50,10 @@ public class CredentialsManager {
     public String getSavedPasswordHash() {
         return sharedPreferences.getString(PASSWORD_HASH_KEY, null);
     }
+
+    public void clearSavedCredentials() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+    }
 }
