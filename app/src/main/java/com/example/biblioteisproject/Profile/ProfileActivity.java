@@ -102,7 +102,8 @@ public class ProfileActivity extends AppCompatActivity {
                 if (id == R.id.mbiCerrarSesion){
                     credentialsManager.clearSavedCredentials();
                     Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // asegura que
+                    // asegura que el login se empiece como una nueva tarea, y si ya hay una instancia de la actividad en la pila de actividades, se elimina
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
                     return true;
