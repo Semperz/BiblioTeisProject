@@ -46,20 +46,19 @@
     <!-- Campo de búsqueda por autor -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutAuthor"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Buscar por autor"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:layout_constraintTop_toBottomOf="@id/inputLayoutTitle"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="8dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputLayoutTitle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etBuscarAutor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"/>
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -67,26 +66,34 @@
         android:id="@+id/btnBuscar"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:text="Buscar"
-        android:textColor="@android:color/white"
         android:backgroundTint="@color/teal_700"
         android:drawableStart="@android:drawable/ic_menu_search"
-        app:layout_constraintTop_toBottomOf="@id/inputLayoutAuthor"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="Buscar"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/rvLibros"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="16dp"/>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvLibros"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="379dp"
+        android:layout_height="452dp"
         android:background="@android:color/white"
         android:padding="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/chkDisponible"
+        android:layout_width="189dp"
+        android:layout_height="46dp"
+        android:text="Disponible"
+        app:layout_constraintBottom_toTopOf="@+id/btnBuscar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnBuscar" />
+        app:layout_constraintTop_toBottomOf="@+id/inputLayoutAuthor" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

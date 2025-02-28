@@ -2,6 +2,8 @@ package com.example.biblioteisproject.AvailableBooks;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 
@@ -19,6 +21,7 @@ public class AvailableBooks extends AppCompatActivity {
     TextInputEditText etBuscarTitulo, etBuscarAutor;
     Button btnBuscar;
     RecyclerView rvLibros;
+    CheckBox chkDisponible;
     private AvailableBooksVM availableBooksVM;
 
     @Override
@@ -41,9 +44,19 @@ public class AvailableBooks extends AppCompatActivity {
             String autor = etBuscarAutor.getText().toString();
             availableBooksVM.getFilteredBooks(titulo, autor);
         });
-
-
-
+        //TODO: Implementar la busqueda con las 3 combinaciones, checkbox, titulo y autor
+        chkDisponible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String titulo = etBuscarTitulo.getText().toString();
+                String autor = etBuscarAutor.getText().toString();
+                if (chkDisponible.isChecked()){
+                    availableBooksVM.getAvailableBooks();
+                }else{
+                    availableBooksVM.getFilteredBooks(titulo, autor);
+                }
+            }
+        });
 
 
     }
@@ -56,5 +69,6 @@ public class AvailableBooks extends AppCompatActivity {
         etBuscarAutor = findViewById(R.id.etBuscarAutor);
         btnBuscar = findViewById(R.id.btnBuscar);
         rvLibros = findViewById(R.id.rvLibros);
+        chkDisponible = findViewById(R.id.chkDisponible);
     }
 }
