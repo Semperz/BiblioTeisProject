@@ -1,6 +1,7 @@
 package com.example.biblioteisproject.details;
 
 import android.annotation.SuppressLint;
+
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -9,16 +10,17 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.example.biblioteisproject.API.models.Book;
-import com.example.biblioteisproject.API.models.BookLending;
 import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.API.repository.BookLendingRepository;
 import com.example.biblioteisproject.API.repository.BookRepository;
 import com.example.biblioteisproject.API.repository.UserProvider;
 import com.example.biblioteisproject.R;
 
+import java.io.IOException;
 import java.util.List;
+
+import okhttp3.ResponseBody;
 
 public class BookDetailActivity extends AppCompatActivity {
 
@@ -33,7 +35,6 @@ public class BookDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
-
         inicializer();
         bookDetailVM = new ViewModelProvider(this).get(BookDetailVM.class);
         bookDetailVM.getLendings().observe(this, bookLendings -> {
@@ -87,9 +88,23 @@ public class BookDetailActivity extends AppCompatActivity {
             tvFechaPubli.setText(book.getPublishedDate());
             tvDisponibilidad.setText(book.isAvailable() ? "Disponible" : "No disponible");
             tvISBN.setText(book.getIsbn());
+
+            if(book.getBookPicture()!= null && !book.getBookPicture().isEmpty()){
+                cargarImagenLibro();
+            }
         }
     }
 
+
+    private void cargarImagenLibro() {
+        bookDetailVM.getBookImage().observe(this, bitmap -> {
+            if (bitmap != null) {
+                ImgLibro.setImageBitmap(bitmap);
+            } else {
+                ImgLibro.setImageResource(R.drawable.imagen_no_disponible);
+            }
+        });
+    }
 
     @SuppressLint("UseCompatLoadingForColorStateLists")
     protected void updateUI(Book book) {
