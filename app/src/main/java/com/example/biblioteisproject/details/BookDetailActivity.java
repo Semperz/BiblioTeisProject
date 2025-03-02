@@ -2,23 +2,35 @@ package com.example.biblioteisproject.details;
 
 import android.annotation.SuppressLint;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuProvider;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.biblioteisproject.API.models.Book;
 import com.example.biblioteisproject.API.models.User;
 import com.example.biblioteisproject.API.repository.BookLendingRepository;
 import com.example.biblioteisproject.API.repository.BookRepository;
 import com.example.biblioteisproject.API.repository.UserProvider;
+import com.example.biblioteisproject.AvailableBooks.AvailableBooks;
+import com.example.biblioteisproject.Profile.ProfileActivity;
 import com.example.biblioteisproject.R;
+
+import com.example.biblioteisproject.scanner.ScannerQRActivity;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 
 import okhttp3.ResponseBody;
 
@@ -31,6 +43,8 @@ public class BookDetailActivity extends AppCompatActivity {
     BookLendingRepository bookLendingRepository;
     BookDetailVM bookDetailVM;
 
+    Toolbar tbMenuBD;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +54,12 @@ public class BookDetailActivity extends AppCompatActivity {
         bookDetailVM.getLendings().observe(this, bookLendings -> {
             updateUI(bookDetailVM.book.getValue());
         });
-        
+
         int _book = getIntent().getIntExtra("book", -1);
 
-        assert _book != -1;
-        bookDetailVM.fetchBook(_book);
+        if (_book != -1) {
+            bookDetailVM.fetchBook(_book);
+        }
         bookDetailVM.getBook().observe(this, book -> {
             updateUI(book);
         });
@@ -57,7 +72,40 @@ public class BookDetailActivity extends AppCompatActivity {
         btnDevolver.setOnClickListener(view ->
                 returnBook());
 
+        setSupportActionBar(tbMenuBD);
 
+        addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.menu_principal, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+
+                int id= menuItem.getItemId();
+
+                if (id == R.id.LibrosDisponibles){
+                    Intent intent = new Intent(BookDetailActivity.this, AvailableBooks.class);
+                    startActivity(intent);
+                    return true;
+                }
+
+                if (id == R.id.Perfil){
+                    Intent intent = new Intent(BookDetailActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+
+                if (id == R.id.Escaner){
+                    Intent intent = new Intent(BookDetailActivity.this, ScannerQRActivity.class);
+                    startActivityForResult(intent, 0);
+                    return true;
+                }
+
+                return false;
+            }
+        });
 
     }
 
@@ -70,6 +118,7 @@ public class BookDetailActivity extends AppCompatActivity {
         tvISBN = findViewById(R.id.tvISBN);
         btnPrestar = findViewById(R.id.btnPrestar);
         btnDevolver = findViewById(R.id.btnDevolver);
+        tbMenuBD = findViewById(R.id.tbMenuBD);
         bookLendingRepository = new BookLendingRepository();
     }
 

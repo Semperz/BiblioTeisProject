@@ -20,6 +20,8 @@ import com.example.biblioteisproject.AvailableBooks.AvailableBooks;
 import com.example.biblioteisproject.AvailableBooks.BooksListAdapter;
 import com.example.biblioteisproject.Profile.ProfileActivity;
 import com.example.biblioteisproject.R;
+import com.example.biblioteisproject.details.BookDetailActivity;
+import com.example.biblioteisproject.scanner.ScannerQRActivity;
 
 public class MenuWindow extends AppCompatActivity {
 
@@ -78,6 +80,12 @@ public class MenuWindow extends AppCompatActivity {
                 if (id == R.id.Perfil){
                     Intent intent = new Intent(MenuWindow.this, ProfileActivity.class);
                     startActivity(intent);
+                    return true;
+                }
+
+                if (id == R.id.Escaner){
+                    Intent intent = new Intent(MenuWindow.this, ScannerQRActivity.class);
+                    startActivityForResult(intent, 0);
                     return true;
                 }
 

@@ -7,4 +7,7 @@
     <item
         android:id="@+id/Perfil"
         android:title="Perfil" />
+    <item
+        android:id="@+id/Escaner"
+        android:title="Escaner" />
 </menu>

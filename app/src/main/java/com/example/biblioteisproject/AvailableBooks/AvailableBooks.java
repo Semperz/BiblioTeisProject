@@ -1,18 +1,28 @@
 package com.example.biblioteisproject.AvailableBooks;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import androidx.appcompat.widget.Toolbar;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuProvider;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.biblioteisproject.Profile.ProfileActivity;
 import com.example.biblioteisproject.R;
+import com.example.biblioteisproject.details.BookDetailActivity;
+import com.example.biblioteisproject.scanner.ScannerQRActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class AvailableBooks extends AppCompatActivity {
@@ -22,6 +32,8 @@ public class AvailableBooks extends AppCompatActivity {
     Button btnBuscar;
     RecyclerView rvLibros;
     CheckBox chkDisponible;
+
+    Toolbar tbMenuAB;
     private AvailableBooksVM availableBooksVM;
 
     @Override
@@ -58,6 +70,36 @@ public class AvailableBooks extends AppCompatActivity {
             }
         });
 
+        setSupportActionBar(tbMenuAB);
+
+        addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.menu_principal, menu);
+                menu.removeItem(R.id.LibrosDisponibles);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+
+                int id= menuItem.getItemId();
+
+
+                if (id == R.id.Perfil){
+                    Intent intent = new Intent(AvailableBooks.this, ProfileActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+
+                if (id == R.id.Escaner){
+                    Intent intent = new Intent(AvailableBooks.this, ScannerQRActivity.class);
+                    startActivityForResult(intent, 0);
+                    return true;
+                }
+
+                return false;
+            }
+        });
 
     }
 
@@ -70,5 +112,6 @@ public class AvailableBooks extends AppCompatActivity {
         btnBuscar = findViewById(R.id.btnBuscar);
         rvLibros = findViewById(R.id.rvLibros);
         chkDisponible = findViewById(R.id.chkDisponible);
+        tbMenuAB = findViewById(R.id.tbMenuAB);
     }
 }
