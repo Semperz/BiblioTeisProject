@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
-    tools:context=".MainActivity">
+    tools:context=".login.MainActivity">
 
     <ImageView
         android:id="@+id/logo"
@@ -33,10 +33,10 @@
         android:layout_marginTop="10dp"/>
 
     <EditText
-        android:id="@+id/etUsername"
+        android:id="@+id/etEmail"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:hint="Usuario"
+        android:hint="Email"
         android:background="@drawable/rounded_edittext"
         android:padding="10dp"
         android:textColor="@android:color/black"
@@ -57,7 +57,7 @@
         android:textColor="@android:color/black"
         android:textColorHint="@android:color/darker_gray"
         android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@id/etUsername"
+        app:layout_constraintTop_toBottomOf="@id/etEmail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
@@ -81,7 +81,7 @@
         android:id="@+id/tvRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¿No tienes cuenta? Regístrate"
+        android:text="¿No tienes cuenta? Una pena..."
         android:textColor="@android:color/white"
         android:textSize="14sp"
         android:layout_marginTop="20dp"

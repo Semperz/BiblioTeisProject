@@ -1,26 +1,14 @@
 package com.example.biblioteisproject.API.models;
 
-public class BookLending {
-    private int id;
+import java.io.Serializable;
+
+public class BookLending implements Serializable {
+
     private int bookId;
     private int userId;
-    private String lendDate;
-    private String returnDate;
+    private String lendDate;  // Añadimos el campo lendDate
 
-    private User user;
-    private Book book;
-
-    // Getters & Setters
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    // Getters y Setters
     public int getBookId() {
         return bookId;
     }
@@ -43,13 +31,5 @@ public class BookLending {
 
     public void setLendDate(String lendDate) {
         this.lendDate = lendDate;
-    }
-
-    public String getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(String returnDate) {
-        this.returnDate = returnDate;
     }
 }

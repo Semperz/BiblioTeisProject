@@ -16,10 +16,13 @@
         android:theme="@style/Theme.BiblioTeisProject"
         tools:targetApi="31">
         <activity
-            android:name=".MenuWindow"
+            android:name=".AvailableBooks.AvailableBooks"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".menu.MenuWindow"
+            android:exported="false" />
+        <activity
+            android:name=".login.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +30,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".details.BookDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Profile.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".scanner.ScannerQRActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
