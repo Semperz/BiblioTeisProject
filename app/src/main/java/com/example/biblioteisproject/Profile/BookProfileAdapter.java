@@ -69,12 +69,12 @@ public class BookProfileAdapter extends RecyclerView.Adapter<BookProfileAdapter.
      * @return true si han pasado más de X minutos, false en caso contrario
      */
     private boolean isOverdue(String lendDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()); // Ajuste de formato
         try {
             Date lendDateObj = sdf.parse(lendDate); // Convertir la fecha a Date
             long difference = new Date().getTime() - lendDateObj.getTime(); // Diferencia en milisegundos
             long minutes = difference / (1000 * 60); // Convertir a minutos
-            return minutes > 2; // Si han pasado más de 15 dias, el libro está vencido 21600
+            return minutes > 21600; // Si han pasado más de 2 minutos, el libro está vencido
         } catch (Exception e) {
             e.printStackTrace();
             return false;
