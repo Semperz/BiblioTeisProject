@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,7 +47,7 @@ public class BookProfileAdapter extends RecyclerView.Adapter<BookProfileAdapter.
 
         // Verificar si el libro tiene préstamos antes de acceder a ellos
         if (book.getBookLendings() != null && !book.getBookLendings().isEmpty()) {
-            String lendDate = book.getBookLendings().get(0).getLendDate(); // Primera fecha de préstamo
+            String lendDate = book.getBookLendings().get(0).getLendDate();// Primera fecha de préstamo
             if (isOverdue(lendDate)) {
                 holder.tvTitle.setTextColor(Color.RED); // Marcar en rojo si el préstamo está vencido
             } else {

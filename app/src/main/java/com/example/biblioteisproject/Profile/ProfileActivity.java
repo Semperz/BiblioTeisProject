@@ -78,7 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileWindowMv.getBooks().observe(this, books -> {
             if (books != null && !books.isEmpty()) {
                 sortBooksByLendDate(books);
-                BooksListAdapter adapter = new BooksListAdapter(books);
+                BookProfileAdapter adapter = new BookProfileAdapter(books);
                 rvBooks.setAdapter(adapter);
                 adapter.notifyDataSetChanged(); // Asegurar que los cambios se reflejan
             }
